@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { getAllRecruiters, addRecruiter } from "../api/recruiter.api";
 
-export const useRecruiter = create((set) => ({
+export const useRecruiterStore = create((set) => ({
   recruiters: [],
   loading: false,
   error: null,
@@ -12,9 +12,9 @@ export const useRecruiter = create((set) => ({
       error: null,
     });
     try {
-      const data = getAllRecruiters();
+      const data = await getAllRecruiters();
       set({
-        recruiters: data,
+        recruiters: data || [],
         loading: false,
       });
     } catch (error) {

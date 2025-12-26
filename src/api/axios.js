@@ -1,8 +1,9 @@
 import axios from "axios";
-import { useAuthStore } from "../Store/auth.store";
+import { useAuthStore } from "../stores/auth.store";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
+  withCredentials: false,
 });
 
 api.interceptors.request.use((config) => {
@@ -11,19 +12,19 @@ api.interceptors.request.use((config) => {
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
+
   return config;
 });
 
-api.interceptors.response.use((response) => {
-  return (
-    response,
-    (error) => {
-      if (error.response?.status === 401) {
-        useAuthStore.getState().logout();
-        window.location.href = "/login";
-      }
-      return Promise.reject(error);
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      useAuthStore.getState().logout();
+      window.location.href = "/login";
     }
-  );
-});
+    return Promise.reject(error);
+  }
+);
+
 export default api;

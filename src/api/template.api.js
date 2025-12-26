@@ -4,7 +4,7 @@ export const createTemplate = ({ role, subject, body }) => {
   return api.post("/templates", { role, subject, body });
 };
 
-export const getAllTemplate = () => {
+export const getAllTemplates = () => {
   const res = api.get("/templates");
   return res.data;
 };

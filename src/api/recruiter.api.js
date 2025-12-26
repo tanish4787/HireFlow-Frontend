@@ -9,8 +9,7 @@ export const addRecruiter = ({ name, email, company, role }) => {
   });
 };
 
-export const getAllRecruiters = () => {
-  const res = api.get("/recruiters");
-
-  return res.data;
+export const getAllRecruiters = async () => {
+  const res = await api.get("/recruiters");
+  return res.data.data;
 };

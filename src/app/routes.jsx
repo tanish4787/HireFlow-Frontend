@@ -15,7 +15,7 @@ export default function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route path="/verify" element={<Verify />} />
+      <Route path="/auth/verify" element={<Verify />} />
 
       <Route element={<ProtectedRoute />}>
         <Route index element={<Dashboard />} />
@@ -26,6 +26,5 @@ export default function AppRoutes() {
         <Route path="send/batch" element={<BatchSend />} />
       </Route>
     </Routes>
-    
   );
 }
