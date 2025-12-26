@@ -9,7 +9,7 @@ import Templates from "../pages/Templates";
 import SingleSend from "../pages/SingleSend";
 import BatchSend from "../pages/BatchSend";
 
-import ProtectedRoute from "../auth/ProtectedRoute";
+import ProtectedRoute from "../pages/ProtectedRoute";
 
 export default function AppRoutes() {
   return (
@@ -26,5 +26,6 @@ export default function AppRoutes() {
         <Route path="send/batch" element={<BatchSend />} />
       </Route>
     </Routes>
+    
   );
 }
