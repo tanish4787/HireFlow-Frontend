@@ -1,12 +1,13 @@
 import api from "./axios";
 
-export const addRecruiter = ({ name, email, company, role }) => {
-  return api.post("/recruiters", {
+export const addRecruiter = async ({ name, email, company, role }) => {
+  const res = await api.post("/recruiters", {
     name,
     email,
     company,
     role,
   });
+  return res.data.data;
 };
 
 export const getAllRecruiters = async () => {

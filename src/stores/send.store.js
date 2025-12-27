@@ -5,12 +5,14 @@ export const useSendStore = create((set) => ({
   sending: false,
   results: [],
   error: null,
+  status: null,
 
   sendSingle: async ({ recruiterId, resumeId, templateId }) => {
     set({
       sending: true,
       results: [],
       error: null,
+      status: null,
     });
 
     try {
@@ -23,11 +25,26 @@ export const useSendStore = create((set) => ({
       set({
         results: [data],
         sending: false,
+        status: "Sent",
       });
-    } catch (err) {
+    } catch (error) {
+      if (error.response?.status === 409) {
+        set({
+          sending: false,
+          status: "DUPLICATE",
+          error: "Resume already sent to this recruiter",
+        });
+
+        return {
+          ok: false,
+          reason: "DUPLICATE",
+        };
+      }
+
       set({
         error: "Failed to send resume",
         sending: false,
+        status: "Failed",
       });
     }
   },

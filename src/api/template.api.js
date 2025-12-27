@@ -1,15 +1,15 @@
 import api from "./axios";
 
-export const createTemplate = ({ role, subject, body }) => {
-  return api.post("/templates", { role, subject, body });
+export const createTemplate = async ({ role, subject, body }) => {
+  const res = await api.post("/templates", { role, subject, body });
+  return res.data.data;
 };
 
-export const getAllTemplates = () => {
-  const res = api.get("/templates");
-  return res.data;
+export const getAllTemplates = async () => {
+  const res = await api.get("/templates");
+  return res.data.data;
 };
 
-export const deleteTemplate = (id) => {
-  const res = api.delete(`/templates/${id}`);
-  return res.data;
+export const deleteTemplate = async (id) => {
+  await api.delete(`/templates/${id}`);
 };

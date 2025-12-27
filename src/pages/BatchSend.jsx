@@ -6,7 +6,7 @@ import { useSendStore } from "../stores/send.store";
 
 const BatchSend = () => {
   const { resumes, fetchResumes } = useResumeStore();
-  const { recruiters, fetchRecruiters } = useRecruiterStore();
+  const { recruiters, fetchAllRecruiters } = useRecruiterStore();
   const { templates, fetchTemplates } = useTemplateStore();
   const { sendBatch, sending, results, error, clearResults } = useSendStore();
 
@@ -16,7 +16,7 @@ const BatchSend = () => {
 
   useEffect(() => {
     fetchResumes();
-    fetchRecruiters();
+    fetchAllRecruiters();
     fetchTemplates();
 
     return () => clearResults();

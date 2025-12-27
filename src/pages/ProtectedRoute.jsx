@@ -4,7 +4,7 @@ import { useAuthStore } from "../stores/auth.store";
 const ProtectedRoute = () => {
   const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
 
-  console.log("[PROTECTED ROUTE]", isAuthenticated);
+  "[PROTECTED ROUTE]", isAuthenticated;
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;

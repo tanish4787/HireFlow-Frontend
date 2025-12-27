@@ -11,10 +11,10 @@ const Verify = () => {
   const hasCalledApi = useRef(false);
 
   useEffect(() => {
-    console.log("[VERIFY PAGE MOUNTED]", window.location.href);
+    "[VERIFY PAGE MOUNTED]", window.location.href;
 
     const token = searchParams.get("token");
-    console.log("[VERIFY TOKEN]", token);
+    "[VERIFY TOKEN]", token;
 
     if (!token) {
       navigate("/login", { replace: true });
@@ -26,10 +26,10 @@ const Verify = () => {
 
     const verify = async () => {
       try {
-        console.log("[VERIFY CALLING API]");
+        ("[VERIFY CALLING API]");
 
         const res = await verifyMagicLink(token);
-        console.log("[VERIFY SUCCESS]", res);
+        "[VERIFY SUCCESS]", res;
 
         if (res && res.token) {
           login(res.token);

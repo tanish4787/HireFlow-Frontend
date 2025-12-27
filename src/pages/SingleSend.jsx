@@ -6,7 +6,7 @@ import { useSendStore } from "../stores/send.store";
 
 const SingleSend = () => {
   const { resumes, fetchResumes } = useResumeStore();
-  const { recruiters, fetchRecruiters } = useRecruiterStore();
+  const { recruiters, fetchAllRecruiters } = useRecruiterStore();
   const { templates, fetchTemplates } = useTemplateStore();
 
   const { sendSingle, sending, results, error, clearResults } = useSendStore();
@@ -17,7 +17,7 @@ const SingleSend = () => {
 
   useEffect(() => {
     fetchResumes();
-    fetchRecruiters();
+    fetchAllRecruiters();
     fetchTemplates();
 
     return () => clearResults();
@@ -31,6 +31,19 @@ const SingleSend = () => {
       recruiterId,
       templateId,
     });
+
+    if (results?.reason === "DUPLICATE") {
+      alert("You’ve already sent this resume to this recruiter.");
+      return;
+    }
+
+    if (results?.reason === "FAILED") {
+      alert("Failed to send resume. Try again.");
+    }
+
+    if (results?.ok) {
+      alert("Resume sent successfully!");
+    }
   };
 
   return (
