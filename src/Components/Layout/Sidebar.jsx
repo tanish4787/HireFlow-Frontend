@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   HiOutlineHome,
   HiOutlineUserGroup,
@@ -10,6 +10,7 @@ import {
 } from "react-icons/hi";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
   return (
     <aside
       className="
@@ -51,6 +52,9 @@ const Sidebar = () => {
 
       <div className="px-4 py-4 border-t border-[#23283A]">
         <button
+          onClick={() => {
+            navigate("/");
+          }}
           className="
             flex items-center gap-2
             text-sm text-gray-400
