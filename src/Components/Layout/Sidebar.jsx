@@ -48,6 +48,11 @@ const Sidebar = () => {
           icon={<HiOutlinePaperAirplane />}
           label="Send"
         />
+        <NavItem
+          to="/send/batch"
+          icon={<HiOutlinePaperAirplane />}
+          label="Send Batch"
+        />
       </nav>
 
       <div className="px-4 py-4 border-t border-[#23283A]">

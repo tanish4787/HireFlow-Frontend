@@ -27,9 +27,8 @@ const BatchSend = () => {
     fetchResumes();
     fetchAllRecruiters();
     fetchTemplates();
-
     return () => clearResults();
-  }, []);
+  }, [fetchAllRecruiters, fetchResumes, fetchTemplates, clearResults]);
 
   const toggleRecruiter = (id) => {
     setRecruiterIds((prev) =>
@@ -39,29 +38,32 @@ const BatchSend = () => {
 
   const handleSend = async (e) => {
     e.preventDefault();
-
-    await sendBatch({
-      recruiterIds,
-      resumeId,
-      templateId,
-    });
+    await sendBatch({ recruiterIds, resumeId, templateId });
     toast.success("Batch send completed. Review results below.");
   };
 
   return (
-    <div className="space-y-8 animate-fadeIn">
+    <div className="space-y-10 animate-fade-up">
       <div>
-        <h1 className="text-2xl font-semibold text-gray-900">
-          Send Resume (Batch)
+        <h1 className="text-2xl font-semibold text-gray-100">
+          Batch Resume Send
         </h1>
-        <p className="text-sm text-gray-600 mt-1">
-          Send a single resume to multiple recruiters in one controlled action.
+        <p className="text-sm text-gray-400 mt-1 max-w-xl">
+          Send a single resume to multiple recruiters in one deliberate,
+          controlled action.
         </p>
       </div>
 
       <form
         onSubmit={handleSend}
-        className="bg-white border rounded-2xl p-6 space-y-6 shadow-sm"
+        className="
+          bg-[#161A22]
+          border border-[#23283A]
+          rounded-2xl
+          p-6 md:p-8
+          space-y-6
+          shadow-[0_20px_40px_rgba(0,0,0,0.45)]
+        "
       >
         <SelectField
           label="Resume"
@@ -69,7 +71,7 @@ const BatchSend = () => {
           value={resumeId}
           onChange={(e) => setResumeId(e.target.value)}
         >
-          <option value="">Select Resume</option>
+          <option value="">Select resume</option>
           {resumes.map((r) => (
             <option key={r._id} value={r._id}>
               {r.label}
@@ -83,7 +85,7 @@ const BatchSend = () => {
           value={templateId}
           onChange={(e) => setTemplateId(e.target.value)}
         >
-          <option value="">Select Template</option>
+          <option value="">Select template</option>
           {templates.map((t) => (
             <option key={t._id} value={t._id}>
               {t.subject}
@@ -92,25 +94,43 @@ const BatchSend = () => {
         </SelectField>
 
         <div className="space-y-2">
-          <label className="text-xs font-medium text-gray-600 flex items-center gap-2">
+          <label className="text-xs font-medium text-gray-400 flex items-center gap-2">
             <HiOutlineUsers />
             Select recruiters
           </label>
 
-          <div className="border rounded-xl p-4 max-h-60 overflow-y-auto space-y-2">
+          <div
+            className="
+              border border-[#23283A]
+              rounded-xl
+              p-3
+              max-h-64
+              overflow-y-auto
+              space-y-1
+              bg-[#0F1117]
+            "
+          >
             {recruiters.map((r) => (
               <label
                 key={r._id}
-                className="flex items-center gap-3 text-sm text-gray-800 cursor-pointer hover:bg-gray-50 p-2 rounded-lg transition"
+                className="
+                  flex items-center gap-3
+                  px-3 py-2
+                  rounded-lg
+                  text-sm text-gray-200
+                  cursor-pointer
+                  hover:bg-[#1C2030]
+                  transition
+                "
               >
                 <input
                   type="checkbox"
                   checked={recruiterIds.includes(r._id)}
                   onChange={() => toggleRecruiter(r._id)}
-                  className="h-4 w-4"
+                  className="h-4 w-4 accent-indigo-500"
                 />
                 <span>
-                  {r.name} <span className="text-gray-500">({r.company})</span>
+                  {r.name} <span className="text-gray-400">({r.company})</span>
                 </span>
               </label>
             ))}
@@ -120,7 +140,17 @@ const BatchSend = () => {
         <button
           type="submit"
           disabled={sending}
-          className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700 transition disabled:opacity-60"
+          className="
+            inline-flex items-center gap-2
+            rounded-xl
+            bg-linear-to-r from-indigo-500 to-violet-500
+            px-6 py-3
+            text-sm font-medium
+            text-white
+            hover:opacity-90
+            transition
+            disabled:opacity-60
+          "
         >
           {sending ? (
             <>
@@ -136,15 +166,23 @@ const BatchSend = () => {
         </button>
       </form>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="text-sm text-red-400">{error}</p>}
 
       {results.length > 0 && (
-        <div className="bg-white border rounded-xl p-4 space-y-2">
-          <h3 className="text-sm font-medium text-gray-700">
+        <div
+          className="
+            bg-[#161A22]
+            border border-[#23283A]
+            rounded-xl
+            p-5
+            space-y-3
+          "
+        >
+          <h3 className="text-sm font-medium text-gray-300">
             Batch send results
           </h3>
 
-          <ul className="text-sm text-gray-700 space-y-1">
+          <ul className="text-sm text-gray-200 space-y-1">
             {results.map((res, idx) => (
               <li key={idx}>
                 {res.recruiterEmail} —{" "}
@@ -161,14 +199,24 @@ const BatchSend = () => {
 const SelectField = ({ label, icon, children, ...props }) => {
   return (
     <div className="space-y-1">
-      <label className="text-xs font-medium text-gray-600 flex items-center gap-2">
+      <label className="text-xs font-medium text-gray-400 flex items-center gap-2">
         {icon}
         {label}
       </label>
       <select
         {...props}
         required
-        className="w-full px-4 py-2 border rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 transition"
+        className="
+          w-full
+          px-4 py-2.5
+          rounded-xl
+          bg-[#0F1117]
+          border border-[#23283A]
+          text-gray-200
+          focus:outline-none
+          focus:ring-2 focus:ring-indigo-500
+          transition
+        "
       >
         {children}
       </select>
